@@ -14,6 +14,11 @@ class Prenda{
     } else { //Está bien pensarlo con if y else?? el catch estaría más arriba?
       throw new TipoCategoriaNoValidoException();
   }
+  
+  public setColorSecundario(Color color){
+    this.colorSecundario = color;
+  }
+}
     
 class TipoCategoriaNoValidoException implements RuntimeExcepcion{}; //
   
