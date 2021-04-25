@@ -1,4 +1,4 @@
-class Prenda{
+public class Prenda{
   TipoPrenda tipo; 
   Material material; 
   Color colorPrincipal; 
@@ -67,7 +67,7 @@ class Prenda{
 	return this.tipo.getCategoria();
 }
   
-class PrendaInvalidaExcepcion implements RuntimeException{};
+public class PrendaInvalidaExcepcion implements RuntimeException{};
   
     
 enum Categoria{
@@ -89,8 +89,8 @@ enum TipoPrenda{
 	  return this.categoria;
   }
 	
-  ZAPATO(Categoria.CALZADO),CAMISAMANGACORTA(Categoria.PARTESUPERIOR),
-  PANTALON(Categoria.PARTEINFERIOR)
+  ZAPATO(Categoria.CALZADO),CAMISA(Categoria.PARTESUPERIOR),
+  PANTALON(Categoria.PARTEINFERIOR), CHOMBA(Categoria.PARTESUPERIOR), ZAPATILLAS(Categoria.CALZADO)
   
 }
  
@@ -101,14 +101,14 @@ class Color{  //Clase sin comportamiento pero vale la pena por la abstracción
 }
     
 enum Material{
-  JEAN, CUERO, TELA
+  JEAN, CUERO, TELA, PIQUE, ACETATO
 }
 
 enum Trama{
 	LISA, RAYADA, LUNARES, CUADROS, ESTAMPADO
 }
 
-class BorradorPrenda{
+public class BorradorPrenda{
   TipoPrenda tipo; 
   Material material; 
   Color colorPrincipal; 
@@ -137,4 +137,51 @@ class BorradorPrenda{
 
   Prenda generarPrenda(){
 	  return Prenda(...)
+}
+
+public class Uniforme{
+  Prenda parteSuperior;
+  Prenda parteInferior;
+  Prenda calzado;
+  
+  Uniforme generarUniforme(Institucion institucion){
+	  return new Uniforme(institucion.parteSuperior(), institucion.parteInferior(), institucion.calzado()}
+  }
+ 
+ }
+ 
+ public Interface Institucion{
+	 abstract Prenda parteSuperior();
+	 abstract Prenda parteInferior();
+	 abstract Prenda calzado();
+}
+
+
+
+public class SanJuan implements Institucion{
+	public Prenda parteSuperior(){
+	  return new Prenda(TipoPrenda.CHOMBA,Categoria.PARTESUPERIOR,Material.PIQUE,null,new Color(0,0,255))
+	}
+	
+	public Prenda parteInferiorr(){
+	  return new Prenda(TipoPrenda.PANTALON, Categoria.PARTEINFERIOR, Material.ACETATO,null,new Color(155,155,155)
+	}
+	
+	public Prenda calzado(){
+	  return new Prenda(TipoPrenda.ZAPATILLAS,Categoria.CALZADO,Material.CUERO,new Color(255,255,255))
+	}
+}
+
+public class Johnson implements Institucion{
+	public Prenda parteSuperior(){
+	  return new Prenda(TipoPrenda.CAMISA,Categoria.PARTESUPERIOR,Material.TELA,Trama.LISA,new Color(255,255,255))
+	}
+	
+	public Prenda parteInferiorr(){
+	  return new Prenda(TipoPrenda.PANTALON, Categoria.PARTEINFERIOR, Material.TELA,Trama.LISA,new Color(0,0,0)
+	}
+	
+	public Prenda calzado(){
+	  return new Prenda(TipoPrenda.ZAPATO,Categoria.CALZADO,Material.CUERO,new Color(0,0,0))
+	}
 }
