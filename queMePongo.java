@@ -1,26 +1,41 @@
 class Prenda{
-  TipoPrenda tipo; //quiero especificar qué tipo de prenda estoy cargando (zapatos, camisa de mangas cortas, pantalón, etc).
-  Categoria categoria; //quiero identificar a qué categoría pertenece una prenda (parte superior, calzado, parte inferior, accesorios).
-  Material material; //quiero poder indicar de qué tela o material está hecha una prenda
-  Color colorPrincipal; //quiero poder indicar un color principal para mis prendas
-  Color colorSecundario; //
+  TipoPrenda tipo; 
+  Material material; 
+  Color colorPrincipal; 
+  Color colorSecundario; 
   
-  public Prenda(TipoPrenda tipo, Categoria categoria; Material material; Color colorPrincipal){ //Quiero evitar que haya prendas sin tipo, tela, categoría o color primario
-    if (tipo.perteneceCategoria(categoria)){
+  public Prenda(TipoPrenda tipo, Categoria categoria; Material material; Color colorPrincipal){ 
+    if (tipo.getCategoria() != categoria){
+		throw new PrendaInvalidaException("Categoría inválida");
+    else if (tipo == null || categoria == null || material == null || colorPrincipal == null){
+      throw new PrendaInvalidaException("Faltan datos de la prenda.");
+    }else{
       this.tipo = tipo;
-      this.categoria = categoria;
       this.material = material;
       this.colorPrincipal = colorPrincipal;
-    } else { //Está bien pensarlo con if y else?? el catch estaría más arriba?
+    } else { 
       throw new TipoCategoriaNoValidoException();
   }
-  
-  public setColorSecundario(Color color){
-    this.colorSecundario = color;
-  }
-}
+ 
+  public Prenda(TipoPrenda tipo, Categoria categoria; Material material; Color colorPrincipal; Color colorSecundario){ 
+    if (tipo.getCategoria() != categoria){
+		throw new PrendaInvalidaException("Categoría inválida");
+    else if (tipo == null || categoria == null || material == null || colorPrincipal == null){
+      throw new PrendaInvalidaException("Faltan datos de la prenda.");
     
-class TipoCategoriaNoValidoException implements RuntimeExcepcion{}; //
+    }else{
+      this.tipo = tipo;
+      this.material = material;
+      this.colorPrincipal = colorPrincipal;
+      this.colorSecundario = colorSecundario;
+    } 
+  }
+   
+  public Categoria getCategoria(){
+	return this.tipo.getCategoria();
+}
+  
+class PrendaInvalidaExcepcion implements RuntimeException{};
   
     
 enum Categoria{
@@ -30,11 +45,29 @@ enum Categoria{
   ACCESORIO
 }
   
-enum TipoPrenda{  //Tiene sentido listar todos los posibles valores?
-  ZAPATOS,
-  CAMISAMANGACORTA,
-  PANTALON
-  //Acá cada uno tendría su pertence a categoría?
+enum TipoPrenda{  
+	
+  Categoria categoria;
+
+  TipoPrenda(categoria){
+    this.categoria = categoria;
+  }
+  
+  Categoria getCategoria(){
+	  return this.categoria;
+  }
+	
+  ZAPATO(Categoria.CALZADO),CAMISAMANGACORTA(Categoria.PARTESUPERIOR),
+  PANTALON(Categoria.PARTEINFERIOR)
+  
 }
     
-//Ver el tema del material
+enum Material{
+  JEAN, CUERO, TELA
+}
+
+class Color{  //Clase sin comportamiento pero vale la pena por la abstracción
+  Int rojo;
+  Int verde;
+  Int azul;
+}
